@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-#
-"""
-Pull one point and append to output
-"""
-
 import pyvisa
 import time
 import os
