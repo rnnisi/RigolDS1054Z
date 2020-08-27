@@ -49,7 +49,7 @@ Automates running experiment in Auto Trigger mode where waveforms are grabbed fr
 
 ### Connect(self): Check the wireless connectivity. 
 a.	Take the IP of pi and use first three numbers, changing fourth number (device number), and parse thru values up to 255 to find device. It takes a long time to get to xxx.xxx.x.255, but in practice the scope will generally be assigned a lower digit, since we are using a local host. \
-b.	Try connecting to each device. If the device rejects the connection, there is no device found, or a connection is made but the ID number of the device does not belong to a Rigol DS1000Z scope, the program will keep searching until it hits xxx.xxx.x.255, at which point the program will exit with the advice to check network connectivity. error messages will be printed when the program runs into the described issues. The program will exit immediately if there is no wireless connection.\ 
+b.	Try connecting to each device. If the device rejects the connection, there is no device found, or a connection is made but the ID number of the device does not belong to a Rigol DS1000Z scope, the program will keep searching until it hits xxx.xxx.x.255, at which point the program will exit with the advice to check network connectivity. error messages will be printed when the program runs into the described issues. The program will exit immediately if there is no wireless connection.\\ 
 c.	This will return the object which allows following functions to communicate with the scope.\
 d.	Prints messages to update user what the program is doing, when it is connected, and full id number of scope once connected. 
 
