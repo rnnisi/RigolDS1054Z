@@ -17,7 +17,7 @@ If the OS has lxi-tools and the appropriate peripherals installed, user can take
 
 ## Program Configuration and Requirements
 This program is meant to be run on a Linux OS. It was developed specifically for a raspberry pi. 
-Make sure scope is powerd on, and connected to localhost. Computer also needs to be connected to localhost. \
+Make sure scope is powerd on, and connected to localhost. Computer also needs to be connected to localhost.
 
 On the scope, Utility -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
 Utility -> LAN Config -> RemoteIO LAN needs to be "on" 
@@ -143,7 +143,7 @@ c.	This function refers to other functions within the class; \
 a.	checkDir to properly number output files\
 b.	getVoltages to acquire waveforms\
 d.	if scope becomes disconnected, collection pauses and tries to reconnect. Program exits if reconnect is not possible. \
-e.	Uses daemon thread to refer to TimeOut; if scope stops responding (eg. Scope powered down or network is out), the program will save data files and exit. \
+e.	Uses daemon thread to refer to TimeOut; if scope stops responding (eg. Scope powered down or network is out), the program will save data files and exit.\
 f.	Mean to be used in multiprocessing environment; will send error messages thru pipe to parent process\
 g.	Each waveform dataset is headed by the time at which the acquisition started
 
@@ -152,9 +152,9 @@ a.	Put all csv’s in one subdirectory labeled with the experiment number \
 b.	Generate csv for every waveform with time in first column (seconds), voltage in second (V)
 
 ### GeneralAuto(self, acqt): Acquire data 
-a.	Ask user if they want to use LXI or not \
+a.	Ask user if they want to use LXI or not\
 b.	Acquire data as fast as possible for acquisition time with autotrig\
-c.	Establish multiprocess environment to smooth acquisition process and improve error handling. \
+c.	Establish multiprocess environment to smooth acquisition process and improve error handling.\
 d.  In case of loss of connection, program will try to reestablish connection. \
     If impossible, it will save data and continue to processing
 
@@ -165,11 +165,11 @@ c.	Establish multiprocess environment to smooth acquisition process and improve 
 
 ## Output Types
 ### 1.	Waveform file: Wfm_N.txt
-a.  Each line is one long string of all the voltage readouts. \
+a.  Each line is one long string of all the voltage readouts.\
     This is a string of bytes returned by the scope. Headed by timestamp. This is raw data and needs to be processed to be particularly useful.\
 b.  One per experiment
 ### 2.	Experiment log: ExpLog.txt
-a.  Each experiment is automatically logged with number, date/time, acqusition mode, trigger mode, number of waveforms, and user notes. \
+a.  Each experiment is automatically logged with number, date/time, acqusition mode, trigger mode, number of waveforms, and user notes.\
 b.  input option for user notes is stored in ExpLog.txt\
 c.  One per Experiment
 ### 3.	Experiment Directory: /Exp_n
