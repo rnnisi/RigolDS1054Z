@@ -95,7 +95,6 @@ l.	Nth Edge Trigger (Option)\
 m.	RS232 Trigger (Option)\
 n.	I2C Trigger (Option) \
 o.	SPI Trigger (Option) SetTrigSweep(self): get user input to set trigger sweep.\
-c.	Repromts user if input is not valid\
 
 ### SetTrigSweep(self) : user input for Auto, normal, and single 
 a.	See pg 5-3 in user manual for details on these trigger modes 
