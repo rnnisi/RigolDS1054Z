@@ -23,14 +23,14 @@ On the scope, Utility -> LAN Config -> Configure needs to be on DHCP and Auto, s
 Utility -> LAN Config -> RemoteIO LAN needs to be "on" 
 
 ### Python Libraries 
-- pyvisa\
-- time\
-- os\
-- sys\
-- subprocess\
-- threading\
-- _thread\
-- re\
+- pyvisa
+- time
+- os
+- sys
+- subprocess
+- threading
+- _thread
+- re
 - multiprocessing
 
 ### Optional software
@@ -85,10 +85,10 @@ c.	Slope Trigger\
 d.	Video Trigger\
 e.	Pattern Trigger\
 f.	Duration Trigger\
-g.	Setup/Hold Trigger (Option) \
+g.	Setup/Hold Trigger (Option)\
 h.	TimeOut Trigger (Option)\
 i.	Runt Trigger (Option)\ 
-j.	Windows Trigger (Option) \
+j.	Windows Trigger (Option)\
 k.	Delay Trigger (Option)\
 l.	Nth Edge Trigger (Option)\
 m.	RS232 Trigger (Option)\
