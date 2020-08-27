@@ -45,7 +45,6 @@ Automates running experiment in Single Trigger mode where trigger is forced and 
 Automates running experiment in Auto Trigger mode where waveforms are grabbed from screen. Program starts by taking user input for DAQ time, whether lxi or pyvisa is used for data acqusition, and asking for any notes for experimental log. Ends by generating CSV's and putting them in directory  labeled by experiment number.
 
 ## Structure of class: RigolDS1054Z
-__init__(self): describes objects which will be called upon throughout entire library 
 
 **Connect(self)**:Check the wireless connectivity. 
 a.	Take the IP of pi and use first three numbers, changing fourth number (device number), and parse thru values up to 255 to find device. It takes a long time to get to xxx.xxx.x.255, but in practice the scope will generally be assigned a lower digit, since we are using a local host. \
