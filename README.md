@@ -148,7 +148,7 @@ a.	Ask user if they want to use LXI or not
 b.	Acquire data as fast as possible for acquisition time by forcing trigger, reading data from internal memory, then resetting trigger
 c.	Establish multiprocess environment to smooth acquisition process and improve error handling. 
 
-### Output Types
+## Output Types
 ### 1.	Waveform file: Wfm_n.txt
 a.  Each line is one long string of all the voltage readouts. 
     This is a string of bytes returned by the scope. Headed by timestamp. This is raw data and needs to be processed to be particularly useful.
