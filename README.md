@@ -15,8 +15,13 @@ If the OS has lxi-tools and the appropriate peripherals installed, user can take
   a.	Forces trigger, gets waveform, resets
   b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools) 
 
-## Program Requirements
+## Program Configuration and Requirements
 This program is meant to be run on a Linux OS. It was developed specifically for a raspberry pi. 
+Make sure scope is powerd on, and connected to localhost. Computer also needs to be connected to localhost. 
+
+On the scope, Utility -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
+Utility -> LAN Config -> RemoteIO LAN needs to be "on" 
+
 ### Python Libraries 
 - pyvisa
 - time
@@ -31,7 +36,14 @@ This program is meant to be run on a Linux OS. It was developed specifically for
 ### Optional software
 - lxi-tools (requires API and peripheral software, see https://lxi-tools.github.io/) 
 
-## Structure of library: GetWaveform(self)
+## Contents
+### RigolDS1054Z.py
+library for DAQ from scope. Will work with similar Rigol scopes
+### SingleTriggerMode.py : Automates running experiment in Single Trigger mode where trigger is forced and scope is stopped before taking waveform. Program starts by taking user input for DAQ time, whether lxi or pyvisa is used for data acqusition, and asking for any notes for experimental log. Ends by generating CSV's and putting them in directory  labeled by experiment number. 
+### SingleTriggerMode.py
+Automates running experiment in Auto Trigger mode where waveforms are grabbed from screen. Program starts by taking user input for DAQ time, whether lxi or pyvisa is used for data acqusition, and asking for any notes for experimental log. Ends by generating CSV's and putting them in directory  labeled by experiment number.
+
+## Structure of class: RigolDS1054Z
 ### __init__(self): describes objects which will be called upon throughout entire library 
 
 ### Connect(self): Check the wireless connectivity. 
