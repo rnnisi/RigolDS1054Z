@@ -11,14 +11,14 @@ Log each run
 
 import RigolDS1054Z as RS
 
-acqt = input("Enter desired duration of acqusition time: ") 
+acqt = input("Enter desired duration of acqusition time in seconds: ") 
 
 rigol = RS.RigolDS1054Z()
-rigol.Connect()
-rigol.SetupSingTrigCollection(1200)	# collect 1200 points
-rigol.GetParams()	# essential to do before DAQ incase connection is lost
-rigol.setupDAQf()
-rigol.SetSingTrig()
-rigol.SingTrigMode(float(acqt))
-rigol.autogenCSV()
+rigol.Connect() # establish connection
+rigol.SetupSingTrigCollection(1200)	# tell scope we want 1200 points for each waveform
+rigol.GetParams()	# essential to do before DAQ incase connection is lost; this will be used to make x data
+rigol.setupDAQf() # configure output files
+rigol.SetSingTrig()  # trigger mode needs to be single trigger
+rigol.SingTrigMode(float(acqt))  # collect waveforms during specified time window
+rigol.autogenCSV()  # when acqt is over, or if SingTrigMode has a fatal error, generate a CSV for each waveform
 print("Program finished. Exiting...")
