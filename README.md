@@ -57,9 +57,9 @@ d.	Prints messages to update user what the program is doing, when it is connecte
 
 **query(self, q)**: send a query to device, has built in error handling
 
-**write(self, cmd)**: send a command to device, has built in error handling
-### ReadFile(self, infile): read lines of file
+**ReadFile(self, infile)**: read lines of file
 a.  Use to return contents of file as list, one item per line. 
+
 **Run(self)**: tell device to run
 **Stop(self)**: tell device to stop 
 
