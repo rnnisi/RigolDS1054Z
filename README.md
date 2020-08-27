@@ -8,11 +8,11 @@ If the OS has lxi-tools and the appropriate peripherals installed, user can take
 
 ## Program Modes
 ### 1.	Auto
-  a.	Collect waveform data in autotrigger mode as it appears on screen
-  b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools)
+  a.	Collect waveform data in autotrigger mode as it appears on screen\
+  b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools)\
   c.	Auto-generated directory for experiment with CSV files for each wave form
 ### 2.	Single Trigger
-  a.	Forces trigger, gets waveform, resets
+  a.	Forces trigger, gets waveform, resets\
   b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools) 
 
 ## Program Configuration and Requirements
