@@ -241,7 +241,7 @@ Trigger sweep options are:
 		self.write(":TRIG:SWE NORM")
 	def SetAutoTrig(self):
 		self.write(":TRIG:SWE AUTO")
-		def CoupAC(self):
+	def CoupAC(self):
 		self.write(":TRIG:COUP AC")
 	def CoupDC(self):
 		self.write(":TRIG:COUP DC")
