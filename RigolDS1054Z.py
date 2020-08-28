@@ -96,6 +96,19 @@ Check that:
 		if i == 10:
 			print("Unable to fix connection. System exiting...")
 			sys.exit(0)
+	def CmdLinArg(self,n_args):
+		args = list(sys.argv)
+		if len(args) != n_args:
+			print("Program requires a different number if command line arguements. First should be desired run time in seconds, second 'LXI' or 'normal' to dictate DAQ method. Only use 'LXI' if lxi-tools is properly installed. Third should be CHAN# to indicate the channel you want to read data from.\nCheck manual or python runfile for more specifications.")
+			sys.exit(0)
+		else:
+			pass
+		try:
+			float(args[1])
+		except ValueError:
+			print("First command line arguement needs to be numerical value. This arguement dictates runtime.")
+			sys.exit(0)
+		return args 
 	def query(self, q):		# send question to scope, scope returns value
 		while True:
 			try:
@@ -380,9 +393,10 @@ Trigger sweep options are:
 				child_conn.send('NoConn')
 				child_conn.close()
 				os._exit(0)
-	def GeneralAuto(self, acqt):	# collects waveforms as fast as it can, no trigger consideration 
-		mode = input("Enter 'LXI' if you wish to use LXI for data acquisition, else enter 'normal': ")
-		notes = input("\nEnter any short notes you wish to log with this experiment: ")
+	def GeneralAuto(self, acqt, mode):	# collects waveforms as fast as it can, no trigger consideration 
+		#mode = input("Enter 'LXI' if you wish to use LXI for data acquisition, else enter 'normal': ")
+		#notes = input("\nEnter any short notes you wish to log with this experiment: ")
+		notes = ''
 		self.SetAutoTrig()
 		st = time.perf_counter()
 		i = 1
@@ -418,9 +432,10 @@ Trigger sweep options are:
 		log.write("\nExperiment # " + str(self.exp) + ": " + time.asctime() + ", Auto Trigger, mode = " + str(mode) + ", AcqTime = " + str(RunTime) + ", Waveforms Collected = " + str(i) + ", Notes = " + str(notes))
 		log.close()
 		print("Elapsed Time: ", RunTime)
-	def SingTrigMode(self,acqt):	# forces trigger and collects waveforms during stop mode, resets, as fast as possible
-		mode = input("Enter 'LXI' if you wish to use LXI for data acquisition, else enter 'normal': ")
-		notes = input("\nEnter any short notes you wish to log with this experiment: ")
+	def ForceSingTrigMode(self,acqt, mode):	# forces trigger and collects waveforms during stop mode, resets, as fast as possible
+		#mode = input("Enter 'LXI' if you wish to use LXI for data acquisition, else enter 'normal': ")
+		#notes = input("\nEnter any short notes you wish to log with this experiment: ")
+		notes = ''
 		st = time.perf_counter()
 		i = 0
 		log = open("ExpLog.txt", 'a+')
