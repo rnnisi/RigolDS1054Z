@@ -241,6 +241,41 @@ Trigger sweep options are:
 		self.write(":TRIG:SWE NORM")
 	def SetAutoTrig(self):
 		self.write(":TRIG:SWE AUTO")
+		def CoupAC(self):
+		self.write(":TRIG:COUP AC")
+	def CoupDC(self):
+		self.write(":TRIG:COUP DC")
+	def CoupLFR(self):
+		self.write(":TRIG:COUP LFR")
+	def CoupHFR(self):
+		self.write(":TRIG:COUP HFR")
+	def TrigChanEdge(self, trig_ch):
+		self.rig.write(":TRIG:MODE EDGE")
+		self.rig.write(":TRIG:SWE SING")
+		self.rig.write(":TRIG:EDGE:SOUR " + str(trig_ch))		
+	def TrigChanRS232(self, trig_ch):
+		self.rig.write(":TRIG:MODE RS232")
+		self.rig.write(":TRIG:SWE SING")
+		self.rig.write(":TRIG:RS232:SOUR " + str(trig_ch))
+	def TrigLevRS232(self, level):
+		self.rig.write(":TRIG:MODE RS232")
+		self.rig.write(":TRIG:RS232:LEV " + str(level))
+		self.rig.write(":TRIG:SWE SING")
+	def TrigLevEdge(self, level):
+		self.rig.write(":TRIG:MODE EDGE")
+		self.rig.write(":TRIG:EDG:LEV " + str(level))
+		self.rig.write(":TRIG:SWE SING")
+	def SetupNormCollection(self, n, dat_ch):	# use if scope is in auto
+		try:
+			self.rig.timeout = 30000
+			self.rig.write(":WAV:MODE NORM")
+			self.rig.write(":WAV:SOUR " + dat_ch)
+			self.rig.write(":WAV:FORM ASC")
+			self.rig.write("WAV:STAR 1")
+			self.rig.write("wav:STOP "+ str(n))
+		except:
+			print("Unable to send parameters to scope. Reconnecting")
+			self.Connect()
 	def SetupNormCollection(self, n, dat_ch):	# use if scope is in auto
 		try:
 			self.rig.timeout = 3000
