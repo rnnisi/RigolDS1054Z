@@ -46,13 +46,22 @@ Automates running experiment in Auto Trigger mode where waveforms are grabbed fr
 
 ## Structure of class: RigolDS1054Z
 
-**Connect(self)**:Check the wireless connectivity. 
-a.	Take the IP of pi and use first three numbers, changing fourth number (device number), and parse thru values up to 255 to find device. It takes a long time to get to xxx.xxx.x.255, but in practice the scope will generally be assigned a lower digit, since we are using a local host. \
+**Connect(self, option)**:Check the wireless connectivity. 
+a. option will specify auto, or its value will be the IP of the device. If option is 'auto', then the program will proceed to find the device on the network and connect as described. If not auto, the program will try to connect to the specified IP. IP should be used as an arguement (eg. not 'auto' mode) if user is encountering trouble trying to connect to the device.\
+a.	Auto mode will the IP of pi and use first three values, changing fourth number (device number), and parse thru values up to 255 to find device. It takes a long time to get to xxx.xxx.x.255, but in practice the scope will generally be assigned a lower digit, since we are using a local host. \
 b.	Try connecting to each device. If the device rejects the connection, there is no device found, or a connection is made but the ID number of the device does not belong to a Rigol DS1000Z scope, the program will keep searching until it hits xxx.xxx.x.255, at which point the program will exit with the advice to check network connectivity. error messages will be printed when the program runs into the described issues. The program will exit immediately if there is no wireless connection.\
 c.	This will return the object which allows following functions to communicate with the scope.\
 d.	Prints messages to update user what the program is doing, when it is connected, and full id number of scope once connected. 
 
 **ReConnect(self)** : reconnect w device that has already been located by connect
+
+**CmdLinArg(self, n_args)**: take command line arguements. Does not have to be used, but can be used to define arguements for the functions called in the rest of the script. Use user input at beggining to get arguements if not using command line arguements. 
+a. this function takes the number of arguements expected and checks that the user gave the right number of arguements. Program will kill the process if the right number of arguements are not given.\ 
+b. Arg 0 is always the python script. 
+c. Arg 1 is alwasy the acqusitiont time. This function will check that Arg 1 is a floatable value, and kill the process if it is not.\
+d. Arg 2 is always 'LXI' or 'normal' to specify if lxi-tools should be used to collect values, or if normal if the internally contained pyvisa method will be used. 
+e. Arg 3 is always the channel which data will be read from. 
+f. Arg 4 and up is optionally the IP address of the scope, the trigger level, or the channel which will set the trigger, depending on needs. 
 
 **query(self, q)**: send a query to device, has built in error handling
 
@@ -102,6 +111,22 @@ a.	See pg 5-3 in user manual for details on these trigger modes
 **SetNormTrig(self)**: Change trigger to normal mode
 
 **SetAutoTrig(self)**: Change trigger to auto mode
+
+**CoupAC(self)**: Couple scope to AC signal 
+
+**CoupDC(self)**: Couple scope to DC signal
+
+**CoupLFR(self)**: Low frequency reject coupling 
+
+**CoupHFR(self)**: high frequency reject coupling 
+
+**TrigChanRS232(self, trig_ch)**: set RS232 mode triggering, make trig_ch trigger source
+
+**TrigChanEdge(self, trig_ch)**: set edge mode triggering, make trig_ch trigger source
+
+**TrigLevRS232(self, level)**: set RS232 mode triggering, set trigger level
+
+**TrigLevEdge(self, level)**: set edge mode triggering, set trigger level
 
 **SetupNormCollection(self, n)**: Send waveform acquisition specifiers to scope 
 a.	Asks for n points starting from origin to n\
