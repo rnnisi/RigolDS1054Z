@@ -230,20 +230,22 @@ Trigger sweep options are:
 		self.write(":TRIG:SWE NORM")
 	def SetAutoTrig(self):
 		self.write(":TRIG:SWE AUTO")
-	def SetupNormCollection(self, n):	# use if scope is in auto
+	def SetupNormCollection(self, n, dat_ch):	# use if scope is in auto
 		try:
 			self.rig.timeout = 3000
 			self.rig.write(":WAV:MODE NORM")
+			self.rig.write("WAV:SOUR " + dat_ch)
 			self.rig.write(":WAV:FORM ASC")
 			self.rig.write("WAV:STAR 1")
 			self.rig.write("wav:STOP "+ str(n))
 		except:
 			print("Unable to send parameters to scope. Reconnecting")
 			self.Connect()
-	def SetupSingTrigCollection(self, n):	# use for single trigger, reading waveforms when scope is stopped
+	def SetupSingTrigCollection(self, n, dat_ch):	# use for single trigger, reading waveforms when scope is stopped
 		try:
 			self.rig.timeout = 3000
 			self.rig.write(":WAV:MODE RAW")
+			self.rig.write("WAV:SOUR " + dat_ch)
 			self.rig.write(":WAV:FORM ASC")
 			self.rig.write("WAV:STAR 1")
 			self.rig.write("wav:STOP "+ str(n))
