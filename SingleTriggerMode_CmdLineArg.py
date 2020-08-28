@@ -16,7 +16,7 @@ import sys
 
 rigol = RS.RigolDS1054Z()
 args = rigol.CmdLinArg(4)
-rigol.Connect()
+rigol.Connect('auto')
 rigol.SetupSingTrigCollection(1200, str(args[3]))
 rigol.GetParams()
 rigol.setupDAQf()
