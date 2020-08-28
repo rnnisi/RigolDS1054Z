@@ -21,6 +21,6 @@ rigol.SetupSingTrigCollection(1200, "CHAN" + str(data_ch))	# collect 1200 points
 rigol.GetParams()	# essential to do before DAQ incase connection is lost
 rigol.setupDAQf()
 rigol.SetSingTrig()
-rigol.SingTrigMode(float(acqt), mode)
+rigol.ForceSingTrigMode(float(acqt), mode)
 rigol.autogenCSV()
 print("Program finished. Exiting...")
