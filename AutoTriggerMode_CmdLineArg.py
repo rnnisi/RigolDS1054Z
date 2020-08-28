@@ -14,7 +14,7 @@ import sys
 #acqt = input("Enter desired duration of acqusition time: ") 
 
 rigol = RS.RigolDS1054Z(3)
-args = rigol.CmdLinArg()
+args = rigol.CmdLinArg('auto')
 rigol.Connect()
 rigol.SetupNormCollection(1200)
 rigol.GetParams()
