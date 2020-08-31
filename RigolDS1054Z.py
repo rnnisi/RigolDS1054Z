@@ -24,7 +24,13 @@ class RigolDS1054Z:
 			pass
 		try:
 			print("\nChecking Network Connection...\n")
-			self.lh = self.host[:len(self.host)-1]
+			self.lh = self.host[:len(self.host)-1]	# take off the last number in IP
+			while True:
+				if self.lh[len(self.lh)-1:] != '.':
+					self.lh = self.lh[len(self.lh)-1]
+				else:
+					break
+			
 		except:		# wireless is turned off, grep returned empty. exit 
 			print("No network detected. Please connect to localhost and try again.\nProgram exiting.\n")
 			sys.exit(0)
