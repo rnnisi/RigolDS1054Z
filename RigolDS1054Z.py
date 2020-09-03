@@ -17,6 +17,7 @@ class RigolDS1054Z:
 		self.acq = "AcqTimes_1.csv"
 		self.datff = "'Wfm_' + str(i) + '.txt'"
 		self.acqff = "'AcqTimes_' + str(i) + '.csv'"
+		self.IPmem = "remember_IP.txt"
 		try:
 			ifconfig = str(subprocess.check_output(['ifconfig | grep -e inet\ 192.168'], shell = True))
 			self.host = ifconfig[15:26]
@@ -46,8 +47,17 @@ class RigolDS1054Z:
 			except:
 				print("Unable to Connect. Program exiting.")
 				sys.exit(0)
+		print("Checking memory for device IP...")
+		mem = open(self.IPmem, 'r')
+		self.va = str(mem.read())
+		try:
+				self.rig = self.rm.open_resource(self.va)
+				print("Connected to: ",self.rig.write("*IDN?"))
+				return self.rig, self.va
+			except:
+				pass
 		i = 1
-		print("Locating device...")
+		print("Could not connect from memory. Locating device...")
 		while i < 255: # check first 255 devices 
 			if i == 255:	# exit once this number of IP's have been tried 
 				print('''
@@ -98,6 +108,9 @@ Check that:
 					i = i+1
 					pass
 		print("\nConnected to: ", self.idn + "\n\n\n")
+		mem = open(self.IPmem, 'w+')
+		mem.write(str(self.va))
+		mem.close()
 		return self.rig
 	def ReConnect(self):
 		time.sleep(0.05)
