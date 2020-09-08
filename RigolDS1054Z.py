@@ -54,8 +54,8 @@ class RigolDS1054Z:
 				self.rig = self.rm.open_resource(self.va)
 				print("Connected to: ",self.rig.write("*IDN?"))
 				return self.rig, self.va
-			except:
-				pass
+		except:
+			pass
 		i = 1
 		print("Could not connect from memory. Locating device...")
 		while i < 255: # check first 255 devices 
