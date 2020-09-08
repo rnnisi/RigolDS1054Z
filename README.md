@@ -6,6 +6,8 @@ Pull waveforms from scope using python with no backend or driver, over localhost
 
 If the OS has lxi-tools and the appropriate peripherals installed, user can take advantage and automate use of lxi-tools to get waveforms using this program and built in error handling. This is faster than using the pyvisa method. Use of lxi-tools is optional. 
 
+get_RigolDS1054Z will automatically check the OS and install requirements. It will make a new directory which contains the contents of this repo. It is mostly for my use, since it is a linux/mac executable which I may give out for easy installation. It requires a deploy key from user, which user must get from me. 
+
 ## Program Modes
 ### 1.	Auto
   a.	Collect waveform data in autotrigger mode as it appears on screen\
