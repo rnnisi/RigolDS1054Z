@@ -5,7 +5,7 @@
 
 # check for lxi 
 LXI=$(which -a lxi)
-if [ $LXI = "lxi not found" ]
+if [[ $LXI = "lxi not found" ]]
 then
     echo "lxi not installed\nlxi is optional... keep going"
 fi
@@ -13,7 +13,7 @@ fi
 
 # check for python3
 PYTHON=$(which -a python3)
-if [ $LXI = "" ]
+if [[ $LXI = "" ]]
 then
     echo "make sure python3 is installed properly"
     exit
