@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Rebecca Nishide, 09/08/2020 
 # contact: rnnishide@gmail.com for key
@@ -5,15 +6,29 @@
 
 # check for lxi 
 LXI=$(which -a lxi)
-if [[ $LXI = "lxi not found" ]]
+echo $LXI
+LXII=$"true"
+if [[ "$LXI" == "lxi not found" ]]
 then
-    echo "lxi not installed\nlxi is optional... keep going"
+    LXII=$"false"
 fi
 
+if [[ "$LXI" == '' ]]
+then
+    LXII=$"false"
+fi
+
+if [[ "$LXII" == "false" ]]
+then
+    echo "lxi not installed"
+    echo "lxi is optional... keep going"
+    echo ""
+fi
 
 # check for python3
 PYTHON=$(which -a python3)
-if [[ $LXI = "" ]]
+echo $PYTHON
+if [[ "$PYTHON" == "" ]]
 then
     echo "make sure python3 is installed properly"
     exit
