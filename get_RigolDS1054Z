@@ -23,6 +23,7 @@ echo "python3 requirement satisfied"
 
 # get pyvisa, other lib already included 
 sudo pip3 install pyvisa
+sudo pip3 install pyvisa-py
 
 # clone from github with https 
 # need to request access from me to use. 
