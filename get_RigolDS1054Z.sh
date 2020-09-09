@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Rebecca Nishide, 09/08/2020 
 # contact: rnnishide@gmail.com for key
