@@ -75,7 +75,7 @@ Track runs
 - To run: python3 SingleTriggerMode_CmdLineArg.py , program will ask for input 
 - Collect waveforms as fast as possible with trigger in auto mode  
   
- ### plot.py
+### plot.py
 Plot waveform csv, takes number of waveform <i> as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
   
 ## Structure of class: RigolDS1054Z
