@@ -14,8 +14,11 @@ get_RigolDS1054Z will automatically check the OS and install requirements. It wi
   b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools)\
   c.	Auto-generated directory for experiment with CSV files for each wave form
 ### 2.	Single Trigger
-  a.	Forces trigger, gets waveform, resets\
+  a.	checks trigger, gets waveform if triggered, resets\
   b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools) 
+
+### 3. Force Trigger
+  a. forces trigger then collects data, then resets 
 
 ## Program Configuration and Requirements
 This program is meant to be run on a Linux OS. It was developed specifically for a raspberry pi. 
@@ -41,11 +44,40 @@ Utility -> LAN Config -> RemoteIO LAN needs to be "on"
 ## Contents
 ### RigolDS1054Z.py
 library for DAQ from scope. Will work with similar Rigol scopes
-### SingleTriggerMode.py
-Automates running experiment in Single Trigger mode where trigger is forced and scope is stopped before taking waveform. Program starts by taking user input for DAQ time, whether lxi or pyvisa is used for data acqusition, and asking for any notes for experimental log. Ends by generating CSV's and putting them in directory  labeled by experiment number. 
-### SingleTriggerMode.py
-Automates running experiment in Auto Trigger mode where waveforms are grabbed from screen. Program starts by taking user input for DAQ time, whether lxi or pyvisa is used for data acqusition, and asking for any notes for experimental log. Ends by generating CSV's and putting them in directory  labeled by experiment number.
 
+### ExpLog.txt 
+Track runs
+
+### remember_IP.txt
+- embeded file which contains the SCPI address which was used for the last sucessful connection
+
+### SingleTriggerMode_CmdLineArg.py 
+- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)>
+- Check trigger, collect waveform if triggered, reset trigger if triggered
+- Pass if scope is running
+
+### SingleTriggerMode_UsrInput.py 
+- To run: python3 SingleTriggerMode_CmdLineArg.py , program will ask for input 
+- Check trigger, collect waveform if triggered, reset trigger if triggered
+- Pass if scope is running
+
+### SingleTriggerMode_CmdLineArg_ManuConn.py 
+- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)> <Scope IP>
+- Instead of auto connect, connect to IP dictated by command line arguement
+- Check trigger, collect waveform if triggered, reset trigger if triggered
+- Pass if scope is running
+  
+### AutoTriggerMode_CmdLineArg.py 
+- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number>
+- Collect waveforms as fast as possible with trigger in auto mode
+
+### AutoTriggerMode_UsrInput.py 
+- To run: python3 SingleTriggerMode_CmdLineArg.py , program will ask for input 
+- Collect waveforms as fast as possible with trigger in auto mode  
+  
+ ### plot.py
+Plot waveform csv, takes number of waveform <i> as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
+  
 ## Structure of class: RigolDS1054Z
 
 **Connect(self, option)**:Check the wireless connectivity. 
