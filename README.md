@@ -52,31 +52,32 @@ Track runs
 - embeded file which contains the SCPI address which was used for the last sucessful connection
 
 ### SingleTriggerMode_CmdLineArg.py 
-- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)>
+- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)>
 - Check trigger, collect waveform if triggered, reset trigger if triggered
 - Pass if scope is running
 
 ### SingleTriggerMode_UsrInput.py 
-- To run: python3 SingleTriggerMode_CmdLineArg.py , program will ask for input 
+- To run: python3 ./SingleTriggerMode_CmdLineArg.py , program will ask for input 
 - Check trigger, collect waveform if triggered, reset trigger if triggered
 - Pass if scope is running
 
 ### SingleTriggerMode_CmdLineArg_ManuConn.py 
-- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)> <Scope IP>
+- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)> <Scope IP>
 - Instead of auto connect, connect to IP dictated by command line arguement
 - Check trigger, collect waveform if triggered, reset trigger if triggered
 - Pass if scope is running
   
 ### AutoTriggerMode_CmdLineArg.py 
-- To run: python3 SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number>
+- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number>
 - Collect waveforms as fast as possible with trigger in auto mode
 
 ### AutoTriggerMode_UsrInput.py 
-- To run: python3 SingleTriggerMode_CmdLineArg.py , program will ask for input 
+- To run: python3 ./SingleTriggerMode_CmdLineArg.py , program will ask for input 
 - Collect waveforms as fast as possible with trigger in auto mode  
   
 ### plot.py
-Plot waveform csv, takes number of waveform <i> as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
+- to run: ./plot.py <waveform number>
+- Plot waveform csv, takes number of waveform as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
   
 ## Structure of class: RigolDS1054Z
 
