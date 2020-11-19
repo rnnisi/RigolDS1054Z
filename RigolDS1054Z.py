@@ -1,7 +1,7 @@
 """
-Rebecca Nishide, 11/18/2020
+Last updated 11/18/2020
 UCSB Dept. of Physics
-Contact: rnnishide@gmail.com
+Contact: Rebecca Nishide, rnnishide@gmail.com
 """
 
 import pyvisa
