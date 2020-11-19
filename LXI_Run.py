@@ -5,7 +5,7 @@
 Pull waveforms from Rigol DS1054Z scope
 args[1] = RunTime in seconds
 args[2] = 'AUTO', 'FORCE_TRIG', or trigger level; no spaces, include units V, mV, or uV. (eg. 15.V)
-OPTIONAL: args[2-6] = channel assignments; must be integer between 1 and 4. If not provided, all four channels will be read. """
+OPTIONAL: args[2-6] = channel assignments; must be integer between 1 and 4. If not provided, all four channels will be read.
 """
 
 import RigolDS1054Z as RS
