@@ -71,7 +71,7 @@ Run with <./LXI_Run.py> <RunTime> <TriggerSet> to acquire data using LXI tools. 
 On the scope, Utility -> IO Setting -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
 Utility -> IO Setting -> LAN Config -> RemoteIO LAN needs to be "on" 
 
-## 3. USB_Run.py
+### 3. USB_Run.py
 Run with <sudo ./USB_Run.py>. <RunTime> <TriggerSet> sudo is required due to device permissions in Linux. This option is slower but a more reliable connection. Raspberry pi must be hardwired to USB-B port on back of Rigol scope. use <lsusb> command in Linux shell to check that Pi recognizes scope. 
 
 Utility -> IO Setting -> USB Device should be set to "Computer"
@@ -79,12 +79,12 @@ Utility -> IO Setting -> USB Device should be set to "Computer"
 
 ## Important Notes for Use
 
-### What you see is what you get
+### What you see is what you get. 
 If you try to set the trigger level to a value not displayed on the screen of the scope, it will confuse the scope and disrupt the connection. Likewise if you are collecting a waveform that does not fit on the screen of the scope, the returned data will show an incomplete waveform. 
 
-### Connection resets sometimes 
+### Hardware resets sometimes, and that cannot be dealt with through this program. 
 Sometimes the scope freezes or will reset, and you may need to be physically present to power cycle the scope in this case, as this type of issue may not be fixed remotely. 
 
-### This is not fast data acqusition 
+### This is for testing purposes, it is not replacement for fast data acqusition systems.
 It takes about a second to get each waveform; getting four waveforms takes four seconds. 
 
