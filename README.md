@@ -2,30 +2,21 @@
 
 
 ## Purpose
-Pull waveforms from scope using python with no backend or driver, over localhost. Program can be used with basic knowledge of how it works, so that researchers may pull waveforms from an oscilloscope as a means of data acqusition. Program is meant to be setup and left alone; changing settings during run may mess with the accuracy of returned data (particularly the timesteps). 
+This program pulls waveforms from a Rigol DS1054Z scope using python with no backend or driver, over localhost or USB interface. Data collection through USB requires root ability. Program is intended to allow researcher to set it up and leave to collect data on a raspberry pi. Rapberry pi can then be controlled remotely to start program or check status, although depending on desired functionality, user may need to be present to change settings on scope. Each experiment is recorded in an Experimental Log test file, and yields numbered CSV files (one for each waveform) as well as a log of the program activity over the course of the experiment. Practical error handling is written in; program is responsive to all the issues and circumstances I could personally think of.
 
-If the OS has lxi-tools and the appropriate peripherals installed, user can take advantage and automate use of lxi-tools to get waveforms using this program and built in error handling. This is faster than using the pyvisa method. Use of lxi-tools is optional. 
+This program can be utilized for any of the three trigger settings the Rigol DS1054Z scope offers; auto, force, or single. 
 
-get_RigolDS1054Z will automatically check the OS and install requirements. It will make a new directory which contains the contents of this repo. It is mostly for my use, since it is a linux/mac executable which I may give out for easy installation. It requires a deploy key from user, which user must get from me. 
+get_RigolDS1054Z will automatically check the OS and install requirements. It will make a new directory which contains the contents of this repo. Potential users can email me (rnnishide@gmail.com) for their pub-keys to be approved for deployment. 
 
-## Program Modes
-### 1.	Auto
-  a.	Collect waveform data in autotrigger mode as it appears on screen\
-  b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools)\
-  c.	Auto-generated directory for experiment with CSV files for each wave form
-### 2.	Single Trigger
-  a.	checks trigger, gets waveform if triggered, resets\
-  b.	LXI or self options for data acquisition (LXI is faster but requires lxi-tools) 
-
-### 3. Force Trigger
-  a. forces trigger then collects data, then resets 
 
 ## Program Configuration and Requirements
-This program is meant to be run on a Linux OS. It was developed specifically for a raspberry pi. 
-Make sure scope is powerd on, and connected to localhost. Computer also needs to be connected to localhost.
+This program is meant to be run on a Linux OS on a Rapberry Pi with python3.
+Make sure scope is configured correctly for desired data acquisiton method, as described in Acqusition Options and Implementation section.
 
 On the scope, Utility -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
 Utility -> LAN Config -> RemoteIO LAN needs to be "on" 
+
+Root ability or new device rules are required to use USB interface for data acquisition. 
 
 ### Python Libraries 
 - pyvisa
@@ -35,7 +26,6 @@ Utility -> LAN Config -> RemoteIO LAN needs to be "on"
 - subprocess
 - threading
 - _thread
-- re
 - multiprocessing
 
 ### Optional software
@@ -50,35 +40,31 @@ Track runs
 
 ### remember_IP.txt
 - embeded file which contains the SCPI address which was used for the last sucessful connection
-
-### SingleTriggerMode_CmdLineArg.py 
-- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)>
-- Check trigger, collect waveform if triggered, reset trigger if triggered
-- Pass if scope is running
-
-### SingleTriggerMode_UsrInput.py 
-- To run: python3 ./SingleTriggerMode_CmdLineArg.py , program will ask for input 
-- Check trigger, collect waveform if triggered, reset trigger if triggered
-- Pass if scope is running
-
-### SingleTriggerMode_CmdLineArg_ManuConn.py 
-- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number> <Trigger Level (V)> <Scope IP>
-- Instead of auto connect, connect to IP dictated by command line arguement
-- Check trigger, collect waveform if triggered, reset trigger if triggered
-- Pass if scope is running
-  
-### AutoTriggerMode_CmdLineArg.py 
-- To run: python3 ./SingleTriggerMode_CmdLineArg.py <RunTime> <normal/lxi> <Channel number>
-- Collect waveforms as fast as possible with trigger in auto mode
-
-### AutoTriggerMode_UsrInput.py 
-- To run: python3 ./SingleTriggerMode_CmdLineArg.py , program will ask for input 
-- Collect waveforms as fast as possible with trigger in auto mode  
   
 ### plot.py
-- to run: ./plot.py <waveform number>
+- to run in directory with data csv files : ./plot.py <waveform number>
 - Plot waveform csv, takes number of waveform as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
-  
+
+### Run Scripts: See cqusition Options and Implementation section
+
+## Acqusition Options and Implementation
+### 1.	LAN_Run.py
+Run with <./LAN_Run.py> to acquire data over local network shared by Raspbery Pi and scope. Make sure that scope DHCP is enabled on scope. 
+
+On the scope, Utility -> IO Setting -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
+Utility -> IO Setting -> LAN Config -> RemoteIO LAN needs to be "on" 
+
+### 2.	LXI_Run.py
+Run with <./LXI_Run.py> to acquire data using LXI tools. This of course will only work if LXI tools is properly installed. This method may be faster or give less connection issues. This program still uses SCPI commands for initialization. 
+
+On the scope, Utility -> IO Setting -> LAN Config -> Configure needs to be on DHCP and Auto, so that IP adress indicates localhost.
+Utility -> IO Setting -> LAN Config -> RemoteIO LAN needs to be "on" 
+
+## 3. USB_Run.py
+Run with <sudo ./USB_Run.py>. sudo is required due to device permissions in Linux. This option is slower but a more reliable connection. Raspberry pi must be hardwired to USB-B port on back of Rigol scope. use <lsusb> command in Linux shell to check that Pi recognizes scope. 
+
+Utility -> IO Setting -> USB Device should be set to "Computer"
+
 ## Structure of class: RigolDS1054Z
 
 **Connect(self, option)**:Check the wireless connectivity. 
