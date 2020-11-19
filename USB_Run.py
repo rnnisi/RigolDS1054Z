@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 #
 """
-Pull waveforms, as displayed on screen, from scope as fast as allowed
-Log experiment
-Generate directory with a csv for each waveform grabbed
+Pull waveforms from Rigol DS1054Z scope
 args[1] = RunTime in seconds
-args[3] = 'AUTO', 'FORCE_TRIG', or trigger level; no spaces, include units V, mV, or uV. (eg. 15.V)
-OPTIONAL: args[4-7] = channel assignments 
+args[2] = 'AUTO', 'FORCE_TRIG', or trigger level; no spaces, include units V, mV, or uV. (eg. 15.V)
+OPTIONAL: args[2-6] = channel assignments; must be integer between 1 and 4. If not provided, all four channels will be read. 
 """
 
 import RigolDS1054Z as RS
