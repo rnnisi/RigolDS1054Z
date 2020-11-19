@@ -45,7 +45,7 @@ Track runs
 - to run in directory with data csv files : ./plot.py <waveform number>
 - Plot waveform csv, takes number of waveform as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
 
-### Run Scripts: See cqusition Options and Implementation section
+### Run Scripts: See following section.
 
 ## Acqusition Options and Implementation
 
@@ -77,14 +77,14 @@ Run with <sudo ./USB_Run.py>. <RunTime> <TriggerSet> sudo is required due to dev
 Utility -> IO Setting -> USB Device should be set to "Computer"
 
 
-### Important Notes for Use
+## Important Notes for Use
 
-## What you see is what you get
+### What you see is what you get
 If you try to set the trigger level to a value not displayed on the screen of the scope, it will confuse the scope and disrupt the connection. Likewise if you are collecting a waveform that does not fit on the screen of the scope, the returned data will show an incomplete waveform. 
 
-## Connection resets sometimes 
+### Connection resets sometimes 
 Sometimes the scope freezes or will reset, and you may need to be physically present to power cycle the scope in this case, as this type of issue may not be fixed remotely. 
 
-## This is not fast data acqusition 
+### This is not fast data acqusition 
 It takes about a second to get each waveform; getting four waveforms takes four seconds. 
 
