@@ -1,3 +1,9 @@
+"""
+Rebecca Nishide, 11/18/2020
+UCSB Dept. of Physics
+Contact: rnnishide@gmail.com
+"""
+
 import pyvisa
 import time
 import os
@@ -92,7 +98,7 @@ class RigolDS1054Z:
 		if option == 'AutoConnect':
 			self.GetHostBase()
 		else:
-			try:
+			try:		# leave option to give known IP as arguement. Run scripts can be reworked to take advantage of this function.
 				self.SCPI_addy = str("TCPIP0::" + str(option) + "::INSTR")
 				self.rig = self.rm.open_resource(self.SCPI_addy)
 				print("Connected to: ",self.rig.write("*IDN?"))
@@ -101,13 +107,13 @@ class RigolDS1054Z:
 				print("Unable to Connect. Program exiting.")
 				sys.exit(0)
 		print("Checking memory for device IP...")
-		ConnectMemory = self.ConnectFromMemory()
+		ConnectMemory = self.ConnectFromMemory()	# Try connecting to last successful adress 
 		if ConnectMemory == True:
 			return self.rig, self.SCPI_addy
 		else:
 			pass
 		i = 1
-		while i < 255: # check first 255 devices 
+		while i < 255: # check first 255 devices 	# Go through IP's on network until connection is accepted
 			if i == 255:	# exit once this number of IP's have been tried 
 				print('Device not found on network.\nCheck that:\n	  Scope is on\n    Scope and raspi are both connected to localhost\n	DHCP is enabled in IO Setting on utility panel of scope\n	 LAN is ON in RemoteIO within IO Setting option of scope')
 				sys.exit(0)
@@ -117,7 +123,7 @@ class RigolDS1054Z:
 				self.SCPI_addy = "TCPIP0::" + str(self.HostBase) + str(i) + "::INSTR"
 				self.rig = self.rm.open_resource(self.SCPI_addy)	# check if connection can be made
 				print(self.SCPI_addy)
-				CorrectDevice = self.VerifyIDN()
+				CorrectDevice = self.VerifyIDN()	# Verify that you are connected to the Rigol scope.
 				if CorrectDevice == True:
 					break
 				else:
@@ -148,7 +154,8 @@ class RigolDS1054Z:
 			ReConnCmd = "self.rm.open_resource(self.SCPI_addy)"
 		time.sleep(0.05)
 		i = 0
-		while i <10:
+		attempts = 10	# Set number of recconnection attempts to avoid infinite reattempts
+		while i < attempts:
 			try:
 				self.rig = eval(ReConnCmd)
 				print("\nConnection Re-established.")
@@ -182,8 +189,8 @@ class RigolDS1054Z:
 			return True
 		else:
 			return False
-	def isTriggerArg(self, test):
-		if test.upper() == 'AUTO':
+	def isTriggerArg(self, test):	# determine what trigger type is being requested by user
+		if test.upper() == 'AUTO':	# remove case sensitivity 
 			print("\nTrigger method will be set to auto...")
 			return 'AUTO'
 		else:
@@ -200,7 +207,7 @@ class RigolDS1054Z:
 		else:
 			print("Expected command arg[2] to specify trigger setting (auto, force, or voltage value for single trigger method).\narg[2] rejected.\nSystem exiting...\n")
 			sys.exit(0)
-	def CmdLinArg(self,req_args):
+	def CmdLinArg(self,req_args):	# Check user inputted acceptable command line arguements
 		self.argv = list(sys.argv)
 		num_args = len(self.argv)
 		if num_args < req_args:
@@ -214,7 +221,7 @@ class RigolDS1054Z:
 		else:
 			pass
 		return self.argv
-	def Validate_Nch(self, channels):
+	def Validate_Nch(self, channels):	# Clean up data channels requested from user
 		remove_duplicates = set(channels)
 		check_vals = []
 		for i in remove_duplicates:
@@ -226,7 +233,7 @@ class RigolDS1054Z:
 			else:
 				print("Channel specification ", i, " rejected.\n	Expected integer value of 1-4.")
 		return check_vals
-	def Get_Nch(self):
+	def Get_Nch(self):	# Generate list of channels in ascending order which will be referred to throughout the program
 		self.channel_list = []
 		if len(self.argv) == 3:
 			print("\nNo specifications given, reading all four channels")
@@ -244,7 +251,7 @@ class RigolDS1054Z:
 			print("    Channel ", i)
 		self.num_channels = len(self.channel_list)
 		return self.channel_list.sort()
-	def query(self, q):		# send question to scope, scope returns value
+	def query(self, q):		# send question to scope; use for SCPI command that prompt scope to send value back 
 		try:
 			return self.rig.query(q)
 		except:	# no device at address
@@ -260,7 +267,7 @@ class RigolDS1054Z:
 				i = i + 1
 				print("Unable to send command: ", cmd)
 				self.ReConnect()
-	def ReadFile(self, infile):
+	def ReadFile(self, infile):	# read infile, return contents list of each line
 		read = open(infile, 'r')
 		lines = read.readlines()
 		read.close()
@@ -369,7 +376,7 @@ class RigolDS1054Z:
 				except TypeError:
 					print("Cound not read voltages. Re-attempting.")
 		return self.a
-	def GetParam(self, cmd):
+	def GetParam(self, cmd):	# collect specified parameter
 		if self.interface == 'USB':
 			self.write("WAV:" + cmd + "; *OPC")
 			param = self.rig.read_bytes(1).decode('utf-8')
@@ -390,7 +397,7 @@ class RigolDS1054Z:
 			return param.strip()
 		else:
 			print("Failed to get param", cmd)
-	def GetParams_Nch(self):	# get params 
+	def GetParams_Nch(self):	# get parameters from scope for reference to in program and later reference
 		print("\nGetting scope parameters...")
 		self.xinc = self.GetParam("XINC?\n")
 		self.xor = self.GetParam("XOR?\n")
@@ -419,25 +426,11 @@ class RigolDS1054Z:
 				os.path.isdir(f)
 		self.out = str(f) + '.txt'
 		self.exp = str(i - 1)
-		return [self.out, self.exp]	# output file will be returned as a string with name, number, and extension
-	def mkdir(self):
+		return [self.out, self.exp]	# Program will use sequential file labels to keep data indexed and organized within workign directory.
+	def mkdir(self):	# make directory for the experiment 
 		cmd = 'mkdir ./' + self.directory
 		subprocess.Popen([cmd], shell = True)
 		subprocess.check_output(['pwd'], shell = True)
-	def readRawDat(self):
-		self.datf.close()
-		self.rawdat = list(self.ReadFile(self.directory + '.txt'))
-	def extractVoltageDat(self, csv_name, i):
-		df = open('./' + self.directory + '/' + fn)
-		ydat = []
-		v = list(str(rawdat[i]).split(','))
-		df.write(v[0] + '\n')
-		for k in range(1, len(v)):
-			if v[k].find('\n') == -1:
-				ydat.append(v[k])
-			else:
-				pass
-		return ydat
 	def writeCSV(self, csv_name, xdat, ydat):
 		csv = open(csv_name, 'w+')
 		for i, j in zip(xdat, ydat):
@@ -471,8 +464,8 @@ class RigolDS1054Z:
 			else:	
 				dat_ch_index = dat_ch_index + 1	# read next channel
 				pass
-	def writeTriggerLog(self, TriggerStatus, StartTime):
-		trig_log = open(self.TriggerLog, 'w+')
+	def writeTriggerLog(self, TriggerStatus, StartTime):	# record each time and trigger, may be useful for later signal processing
+		trig_log = open(self.TriggerLog, 'w+')		# will keep track of parameters, time, program and scope settings to automate good experimental practices
 		trig_log.write("Reading Channels: ")
 		for i in range(self.num_channels):
 			if i < self.num_channels -1:
@@ -553,7 +546,7 @@ class RigolDS1054Z:
 				child_conn.send('NoConn')
 				child_conn.close()
 				os._exit(0)
-	def GetWaveformSet(self, trig_stat):
+	def GetWaveformSet(self, trig_stat):	# use multiprocessing to gather waveform
 		parent_conn, child_conn = Pipe()
 		for j in self.channel_list:
 			print("    Channel ", j, " data acquired...")
@@ -574,12 +567,12 @@ class RigolDS1054Z:
 				p1.join()
 				operation =  "success"
 		return operation
-	def WriteExpLog(self, RunTime, i):
+	def WriteExpLog(self, RunTime, i):	# Record experiment
 		log = open("ExpLog.txt", 'a+')
 		log.write("\nExperiment # " + str(self.exp) + ": " + time.asctime() + ", Interface = " + str(self.interface) + ", ChannelList = " + str(self.channel_list) + ", Trigger = " + self.TriggerMode + ", AcqTime = " + str(RunTime) + ", ScopeChecks = " + str(i))
 		log.close()
-	def CallParams(self):
-		self.Run()
+	def CallParams(self):	 # call function to get parameters
+		self.Run()	# error handling written in in case scope is overwhelmed
 		j = 0
 		while j < 11:
 			try:
@@ -591,7 +584,7 @@ class RigolDS1054Z:
 				time.sleep(0.01)
 		self.Run()
 		time.sleep(0.01)
-	def AutoMode(self, acqt):	# collects waveforms as fast as it can, no trigger consideration 
+	def AutoMode(self, acqt):	# collects waveforms as fast as it can on auto, no trigger consideration 
 		self.SetAutoTrig()
 		st = time.perf_counter()
 		i = 1
@@ -625,7 +618,7 @@ class RigolDS1054Z:
 		subprocess.Popen([cmd], shell = True)
 		subprocess.check_output(['ls'], shell = True)
 		print("Elapsed Time: ", RunTime)
-	def ForceTriggerMode(self,acqt):	
+	def ForceTriggerMode(self,acqt):	# force trigger for each check 
 		st = time.perf_counter()
 		i = 0
 		self.trig_lev = 'Force'
@@ -660,11 +653,11 @@ class RigolDS1054Z:
 		subprocess.Popen([cmd], shell = True)
 		subprocess.check_output(['ls'], shell = True)
 		print("Elapsed Time: ", RunTime)
-	def SingleTriggerMode(self, acqt):
-		st = time.perf_counter()
+	def SingleTriggerMode(self, acqt):	# Set single trigger value (set by RN as edge type trigger), collect waveform when triggered
+		st = time.perf_counter()	# when not triggered and collecting waveform, keep checking trigger
 		i = 0	# iteration number
 		self.SetSingTrig()
-		self.TrigLevEdge(self.trig_lev)
+		self.TrigLevEdge(self.trig_lev)	# change this if you want a type of trigger other than edge
 		time.sleep(0.01)
 		self.Run()
 		time.sleep(0.01)
@@ -710,7 +703,7 @@ class RigolDS1054Z:
 		#subprocess.check_output(['pwd'], shell = True)
 		print("Elapsed Time: ", RunTime)
 		self.writeTriggerLog(self.TriggerStatus, st)
-	def SetupDAQ(self): # establish output files, experiment number for run 
+	def SetupDAQ(self): # Call all the functions we need to set up data acqusition, configure program for experiment
 		self.TriggerMode = self.isTriggerArg(self.argv[2])
 		outfile = self.checkdir(self.FirstOutFile, self.AssignOutFile)
 		self.datf = open(outfile[0], 'w+')
@@ -720,7 +713,7 @@ class RigolDS1054Z:
 		print("\nData in:", self.directory.strip(), '\n')
 		self.Get_Nch()
 		self.SetupCollection(1)
-	def StartDAQ(self, acqt):
+	def StartDAQ(self, acqt):	# check what kind of data collection is desired, start data collection 
 		if self.TriggerMode =='AUTO':
 			self.Run()
 			self.SetAutoTrig()
