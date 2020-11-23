@@ -448,6 +448,7 @@ class RigolDS1054Z:
 			ydat = []
 			v = list(str(rawdat[i]).split(','))
 			df.write(v[0] + '--- XINC: ' + str(self.xinc) + '\n')
+			df.write("Time (seconds), Voltages (V)\n")
 			for k in range(1,len(v)):
 				if v[k].find('\n') == -1:
 					ydat.append(v[k])
