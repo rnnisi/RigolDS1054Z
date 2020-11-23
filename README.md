@@ -8,6 +8,7 @@ This program can be utilized for any of the three trigger settings the Rigol DS1
 
 get_RigolDS1054Z will automatically check the OS and install requirements. It will make a new directory which contains the contents of this repo. Potential users can email me (rnnishide@gmail.com) for their pub-keys to be approved for deployment. 
 
+This repository includes code for data transfer. The data transfer method operates by using the Rapberry Pi as a local server. Scripts for upload and download from a local site are provided. User should be aware of memory space on the Pi and delete files manually as needed once they have been transferred for analysis; no built in removal functions are given. 
 
 ## Program Configuration and Requirements
 This program is meant to be run on a Linux OS on a Rapberry Pi with python3.
@@ -39,11 +40,23 @@ library for DAQ from scope. Will work with similar Rigol scopes
 Track runs
 
 ### remember_IP.txt
-- embeded file which contains the SCPI address which was used for the last sucessful connection
+Embeded file which contains the SCPI address which was used for the last sucessful connection
   
 ### plot.py
-- to run in directory with data csv files : ./plot.py <waveform number>
-- Plot waveform csv, takes number of waveform as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
+Run in directory with data csv files : ./plot.py <waveform number>. Script will plot all waveform csv's under same experimental number, takes number of waveform as command line arguement. Deploy in Exp_n directory to plot Wfm_i.csv
+
+### DataTransfer.py
+Library for data transfer, allows use of Raspberry-Pi as a server for data hand-off. 
+
+### SetupServer.sh
+Will install necessary software to use raspberry-pi as server and update permissions. Use root to run.
+
+### UPLOAD.py
+Run in directory on Pi used to collect data from working directory containing Exp_n files. Give experiment number "n" values as command line arguements. The script will upload each directory "Exp_n' and its contents to a local site. 
+
+### DOWNLOAD.py
+Run in terminal of device intended for analysis, which is connected to same local network as pi used to collect data. This script will download and decode all the data from the local site for analysis. Again, give experiment "n", as in "Exp_n", to specifiy which experiment you want to download data for. This script will set up a new "Exp_n" data file in the working directory from which it is run. 
+
 
 ### Run Scripts: See following section.
 
