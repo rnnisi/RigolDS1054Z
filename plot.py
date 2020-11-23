@@ -37,7 +37,7 @@ for i in list_channels:
 	lines = list(raw.split('\n'))
 	time = []
 	volts = []
-	for j in range(1, len(lines)):
+	for j in range(2, len(lines)):
 		try:
 			temp = str(lines[j]).split(', ')
 			volts.append(float(temp[1]))
