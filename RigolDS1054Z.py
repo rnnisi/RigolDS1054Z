@@ -599,6 +599,7 @@ class RigolDS1054Z:
 					print("Lost contact with scope...")
 					break
 				else:
+					i = i + 1
 					pass
 			except KeyboardInterrupt:
 				try:
@@ -606,7 +607,6 @@ class RigolDS1054Z:
 				except:
 					sys.exit(0)
 			finally:
-				i = i +1
 				pass
 		RunTime = time.perf_counter() - st
 		self.WriteExpLog(RunTime, i)
@@ -634,6 +634,7 @@ class RigolDS1054Z:
 				if operation == "fail":
 					break
 				else:
+					i = i + 1
 					pass
 			except KeyboardInterrupt:
 				try:
@@ -641,7 +642,6 @@ class RigolDS1054Z:
 				except:
 					sys.exit(0)
 			finally:
-				i = i + 1
 				pass
 		RunTime = time.perf_counter() - st
 		self.autogenCSV_Nch(self.exp)
@@ -681,6 +681,7 @@ class RigolDS1054Z:
 					if operation == "fail":
 						break
 					else:
+						i = i +1
 						pass
 					try:
 						self.Run()
@@ -691,7 +692,6 @@ class RigolDS1054Z:
 			except KeyboardInterrupt:
 				break
 			finally:
-				i = i +1
 				pass
 		RunTime = time.perf_counter() - st
 		self.WriteExpLog(RunTime, i)
@@ -734,3 +734,5 @@ class RigolDS1054Z:
 			self.SingleTriggerMode(acqt)
 	def Exit(self):
 		sys.exit(0)
+	def GetExpDir(self)
+		return "./Exp_" + str(self.esp)
