@@ -15,4 +15,6 @@ rigol.Connect('AutoConnect')				# AutoConnect. This arguement can be changed to 
 rigol.SetupDAQ()							# Establish settings, allow program to identify self contained objects specific to experiment
 rigol.StartDAQ(args[1])			# Start data acquisition, allow to run until it has surpassed given RunTime
 print("Program finished. Exiting...")
+ExpDir = rigol.GetExpDir()
+subprocess.Popen(["sudo chmod +x " + ExpDir], shell = True)
 rigol.Exit()
