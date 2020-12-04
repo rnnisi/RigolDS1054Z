@@ -101,3 +101,6 @@ Sometimes the scope freezes or will reset, and you may need to be physically pre
 ### This is for testing purposes, it is not replacement for fast data acqusition systems.
 It takes about a second to get each waveform; getting four waveforms takes four seconds. 
 
+### USB interface and using LXI gives nonfatal error messages 
+USB gives an error message at exit that I did not trouble shoot since it does not affect performance. LXI gives a nonfatal error while collecting data. It is annoying but does not really matter as far as I can tell. 
+
