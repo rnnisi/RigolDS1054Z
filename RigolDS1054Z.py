@@ -734,5 +734,5 @@ class RigolDS1054Z:
 			self.SingleTriggerMode(acqt)
 	def Exit(self):
 		sys.exit(0)
-	def GetExpDir(self)
+	def GetExpDir(self):
 		return "./Exp_" + str(self.esp)
