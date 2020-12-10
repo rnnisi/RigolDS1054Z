@@ -19,6 +19,4 @@ echo "<!DOCTYPE html>" > $EXPLOG
 echo "<html>" >> $EXPLOG
 echo "<body>" >> $EXPLOG
 echo "<h1>Experiment Log</h1>" >> $EXPLOG
-echo '<?php echo "INSERT"; ?><br>' >> $EXPLOG
-echo "</body>" >> $EXPLOG
-echo "</html>" >>$EXPLOG
+
