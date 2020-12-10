@@ -18,7 +18,7 @@ DatTran = DataTransfer.DataTransfer()
 
 class RigolDS1054Z:
 	def __init__(self, interface, NetStat):
-		self.channels = "CHANNEL"
+		self.channels = "CHANNELS"
 		self.channels = int(self.channels)
 		self.nickname = "NICKNAME"
 		self.serial = "SERIAL"
